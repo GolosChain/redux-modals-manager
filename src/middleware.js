@@ -14,15 +14,16 @@ export default () => next => action => {
       throw new Error('Trying to open modal without modalId');
     }
 
-    return {
-      modalId,
-      promise: new Promise(resolve => {
-        promises.set(modalId, {
-          modalId,
-          resolve,
-        });
-      }),
-    };
+    const promise = new Promise(resolve => {
+      promises.set(modalId, {
+        modalId,
+        resolve,
+      });
+    });
+
+    promise.modalId = modalId;
+
+    return promise;
   }
 
   if (type === CLOSE_MODAL) {
