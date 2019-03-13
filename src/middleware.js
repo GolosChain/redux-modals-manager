@@ -3,6 +3,11 @@ import { OPEN_MODAL, CLOSE_MODAL } from './actionTypes';
 const promises = new Map();
 
 export default () => next => action => {
+  if (!action) {
+    next(action);
+    return;
+  }
+
   const { type, payload } = action;
 
   const result = next(action);
